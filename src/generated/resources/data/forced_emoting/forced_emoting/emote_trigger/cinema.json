@@ -1,0 +1,9 @@
+{
+  "emoteId": "forced_emoting:cinema",
+  "entityType": "#forced_emoting:humanoid",
+  "immobilize": true,
+  "length": 3.0,
+  "triggerWords": [
+    "cinema"
+  ]
+}

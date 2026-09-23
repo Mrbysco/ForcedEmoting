@@ -1,0 +1,72 @@
+{
+  "length": 1,
+  "animations": [
+    {
+      "bone": "right_arm",
+      "target": "rotation",
+      "keyframes": [
+        {
+          "timestamp": 0,
+          "target": [
+            0,
+            0,
+            152.5
+          ],
+          "interpolation": "linear"
+        },
+        {
+          "timestamp": 0.5,
+          "target": [
+            0,
+            0,
+            150
+          ],
+          "interpolation": "linear"
+        },
+        {
+          "timestamp": 1,
+          "target": [
+            0,
+            0,
+            152.5
+          ],
+          "interpolation": "linear"
+        }
+      ]
+    },
+    {
+      "bone": "left_arm",
+      "target": "rotation",
+      "keyframes": [
+        {
+          "timestamp": 0,
+          "target": [
+            0,
+            0,
+            -152.5
+          ],
+          "interpolation": "linear"
+        },
+        {
+          "timestamp": 0.5,
+          "target": [
+            0,
+            0,
+            -155
+          ],
+          "interpolation": "linear"
+        },
+        {
+          "timestamp": 1,
+          "target": [
+            0,
+            0,
+            -152.5
+          ],
+          "interpolation": "linear"
+        }
+      ]
+    }
+  ],
+  "loop": true
+}
