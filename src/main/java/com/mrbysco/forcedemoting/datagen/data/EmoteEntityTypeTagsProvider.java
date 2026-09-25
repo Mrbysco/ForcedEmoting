@@ -16,11 +16,13 @@ public class EmoteEntityTypeTagsProvider extends EntityTypeTagsProvider {
 
 	@Override
 	protected void addTags(HolderLookup.Provider provider) {
-		this.tag(ForcedEmoting.HUMANOID).add(
+		this.tag(ForcedEmoting.ARMED).add(
 				EntityType.ENDERMAN,
 				EntityType.ZOMBIE, EntityType.HUSK, EntityType.DROWNED,
 				EntityType.SKELETON, EntityType.BOGGED, EntityType.STRAY,
-				EntityType.ZOMBIFIED_PIGLIN, EntityType.PIGLIN, EntityType.PIGLIN_BRUTE
+				EntityType.ZOMBIFIED_PIGLIN, EntityType.PIGLIN, EntityType.PIGLIN_BRUTE,
+				EntityType.EVOKER, EntityType.ILLUSIONER, EntityType.VINDICATOR, EntityType.PILLAGER,
+				EntityType.WARDEN
 		);
 		this.tag(ForcedEmoting.PLAYERS).add(
 				EntityType.PLAYER

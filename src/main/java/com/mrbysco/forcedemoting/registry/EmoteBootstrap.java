@@ -30,12 +30,12 @@ public class EmoteBootstrap {
 
 	public static void emoteTriggerBootstrap(BootstrapContext<EmoteTrigger> context) {
 		HolderGetter<EntityType<?>> entities = context.lookup(Registries.ENTITY_TYPE);
-		HolderSet.Named<EntityType<?>> humanoid = entities.getOrThrow(ForcedEmoting.HUMANOID);
+		HolderSet.Named<EntityType<?>> humanoid = entities.getOrThrow(ForcedEmoting.ARMED);
 
 		List<String> greetings = List.of("hi", "hello");
-		context.register(WAVE_TRIGGER, new EmoteTrigger(greetings, humanoid, 2.0F, WAVE.location(), false, false));
+		context.register(WAVE_TRIGGER, new EmoteTrigger(greetings, humanoid, 2.0F, WAVE.location(), false, false, 16, false));
 
-		context.register(CINEMA_TRIGGER, new EmoteTrigger(List.of("cinema"), humanoid, 3.0F, CINEMA.location(), true, false));
+		context.register(CINEMA_TRIGGER, new EmoteTrigger(List.of("cinema"), humanoid, 3.0F, CINEMA.location(), true, false, 16, false));
 	}
 
 	private static ResourceKey<EmoteTrigger> emoteTriggerKey(String name) {

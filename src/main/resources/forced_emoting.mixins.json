@@ -5,6 +5,7 @@
   "package": "com.mrbysco.forcedemoting.mixin",
   "target": "@env(DEFAULT)",
   "client": [
+    "client.AgeableListModelAccessor",
     "client.LivingEntityRendererMixin"
   ],
   "injectors": {

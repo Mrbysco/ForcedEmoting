@@ -1,6 +1,6 @@
 {
   "emoteId": "forced_emoting:cinema",
-  "entityType": "#forced_emoting:humanoid",
+  "entityType": "#forced_emoting:armed",
   "immobilize": true,
   "length": 3.0,
   "triggerWords": [

@@ -1,6 +1,6 @@
 {
   "emoteId": "forced_emoting:wave",
-  "entityType": "#forced_emoting:humanoid",
+  "entityType": "#forced_emoting:armed",
   "length": 2.0,
   "triggerWords": [
     "hi",

@@ -5,17 +5,15 @@ import com.mrbysco.forcedemoting.emote.EmoteData;
 import com.mrbysco.forcedemoting.emote.EmoteTrigger;
 import com.mrbysco.forcedemoting.network.message.SyncEmoteDataPayload;
 import com.mrbysco.forcedemoting.registry.ModRegistry;
+import com.mrbysco.forcedemoting.util.EmoteUtil;
 import com.mrbysco.forcedemoting.util.TriggerUtil;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MoverType;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -25,51 +23,38 @@ import net.neoforged.neoforge.event.ServerChatEvent;
 import net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
+import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @EventBusSubscriber
 public class EmoteHandler {
-	private static final int RANGE = 16;
-	private static final TargetingConditions TARGETING_CONDITIONS = TargetingConditions.forNonCombat()
-			.ignoreLineOfSight().range(RANGE).selector(entity -> entity.getType().is(ForcedEmoting.HUMANOID) || entity.getType().is(ForcedEmoting.PLAYERS));
-	private static final ResourceLocation SPEED_MODIFIER = ForcedEmoting.modLoc("freeze");
+	private static final Map<ResourceLocation, TargetingConditions> CONDITIONS_MAP = new HashMap<>();
+	private static final TargetingConditions BASE_CONDITIONS = TargetingConditions.forNonCombat()
+			.ignoreLineOfSight();
 
 	@SubscribeEvent
 	public static void onChatMessage(ServerChatEvent event) {
 		ServerPlayer player = event.getPlayer();
 		Component message = event.getMessage();
+		RegistryAccess registryAccess = player.getServer().registryAccess();
 
-		EmoteTrigger matching = TriggerUtil.getMatchingTrigger(player.getServer().registryAccess(), message.getString());
-		if (matching != null) {
+		Pair<ResourceLocation, EmoteTrigger> matchingPair = TriggerUtil.getMatchingTrigger(registryAccess, message.getString());
+		if (matchingPair != null) {
+			ResourceLocation triggerKey = matchingPair.getKey();
+			EmoteTrigger trigger = matchingPair.getValue();
 			Level level = player.level();
-			List<LivingEntity> humanoidEntities = level.getNearbyEntities(LivingEntity.class, TARGETING_CONDITIONS, player, player.getBoundingBox().inflate(RANGE));
+			TargetingConditions condition = CONDITIONS_MAP.computeIfAbsent(triggerKey, (key) ->
+					BASE_CONDITIONS.range(trigger.range()).selector(entity -> entity.getType().is(trigger.entityTypes()))
+			);
+			List<LivingEntity> humanoidEntities = level.getNearbyEntities(LivingEntity.class, condition, player, player.getBoundingBox()
+					.inflate(trigger.range()));
 			humanoidEntities.forEach(livingEntity -> {
-				if (!matching.targetPlayers() && livingEntity.getType().is(ForcedEmoting.PLAYERS)) return;
-
-				EmoteData emoteData = new EmoteData(matching.emoteId(), matching.length(), livingEntity.tickCount);
-				livingEntity.setData(ModRegistry.EMOTING, emoteData);
-
-				livingEntity.move(MoverType.SELF, Vec3.ZERO.add(0, -1, 0));
-				if (livingEntity instanceof Mob mob) {
-					mob.setTarget(null);
-				}
-				if (matching.immobilize())
-					updateSpeed(livingEntity, false);
-
-				PacketDistributor.sendToAllPlayers(new SyncEmoteDataPayload(livingEntity.getId(),
-						emoteData.getAccumulatedTime(), emoteData.getLastTime(), false));
+				if (!trigger.targetPlayers() && livingEntity.getType().is(ForcedEmoting.PLAYERS)) return;
+				EmoteUtil.forceEmote(livingEntity, trigger.emoteId(), trigger.length(), trigger.immobilize());
 			});
-		}
-	}
-
-	private static void updateSpeed(LivingEntity livingEntity, boolean reset) {
-		AttributeInstance speedAttribute = livingEntity.getAttribute(Attributes.MOVEMENT_SPEED);
-		if (speedAttribute == null) return;
-		if (reset) {
-			speedAttribute.removeModifier(SPEED_MODIFIER);
-		} else {
-			speedAttribute.addTransientModifier(new AttributeModifier(SPEED_MODIFIER, -10, AttributeModifier.Operation.ADD_VALUE));
 		}
 	}
 
@@ -93,7 +78,7 @@ public class EmoteHandler {
 				PacketDistributor.sendToAllPlayers(new SyncEmoteDataPayload(livingEntity.getId(),
 						data.getAccumulatedTime(), data.getLastTime(), true));
 				livingEntity.removeData(ModRegistry.EMOTING);
-				updateSpeed(livingEntity, true);
+				EmoteUtil.updateSpeed(livingEntity, true);
 			} else {
 				livingEntity.move(MoverType.SELF, Vec3.ZERO.add(0, -1, 0));
 				if (entity.tickCount % 20 == 0) {

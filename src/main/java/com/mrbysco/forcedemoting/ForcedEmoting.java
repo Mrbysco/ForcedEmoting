@@ -15,7 +15,7 @@ public class ForcedEmoting {
 	public static final String MOD_ID = "forced_emoting";
 	public static final Logger LOGGER = LogUtils.getLogger();
 
-	public static final TagKey<EntityType<?>> HUMANOID = TagKey.create(Registries.ENTITY_TYPE, modLoc("humanoid"));
+	public static final TagKey<EntityType<?>> ARMED = TagKey.create(Registries.ENTITY_TYPE, modLoc("armed"));
 	public static final TagKey<EntityType<?>> PLAYERS = TagKey.create(Registries.ENTITY_TYPE, modLoc("players"));
 
 	public ForcedEmoting(IEventBus eventBus) {

@@ -28,7 +28,7 @@ public class AnimationHandler {
 					//Reset pos
 					resetModel(humanoidModel);
 
-					HumanoidKeyframeAnimations.animate(humanoidModel, definition, state.getAccumulatedTime(), 1.0F, ANIMATION_VECTOR_CACHE);
+					KeyframeAnimationHandler.animate(humanoidModel, definition, state.getAccumulatedTime(), 1.0F, ANIMATION_VECTOR_CACHE);
 				});
 			}
 		}

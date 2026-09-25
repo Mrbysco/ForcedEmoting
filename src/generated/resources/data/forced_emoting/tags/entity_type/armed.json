@@ -9,6 +9,11 @@
     "minecraft:stray",
     "minecraft:zombified_piglin",
     "minecraft:piglin",
-    "minecraft:piglin_brute"
+    "minecraft:piglin_brute",
+    "minecraft:evoker",
+    "minecraft:illusioner",
+    "minecraft:vindicator",
+    "minecraft:pillager",
+    "minecraft:warden"
   ]
 }
