@@ -1,5 +1,9 @@
-// 1.21.1	2026-09-26T00:47:37.0143409	Registries
+// 1.21.1	2026-09-26T03:52:39.9189526	Registries
 14a9069780e05c6120ad5b16beb34ab597d29659 data/forced_emoting/forced_emoting/emote/cinema.json
+b917e46bdc7db0f229bf5504757dd857c327070c data/forced_emoting/forced_emoting/emote/gangnam.json
+d6cc358b835603c8f6ea6896fa757a889ea11237 data/forced_emoting/forced_emoting/emote/six_seven.json
 e4da658faed3e90491763690dd10f7ba478829a2 data/forced_emoting/forced_emoting/emote/wave.json
 b0cff3d566e8c017433fdad3d49e04ed4306fd92 data/forced_emoting/forced_emoting/emote_trigger/cinema.json
+5c2f53caadea0e31ae5259fe9eb080b588858476 data/forced_emoting/forced_emoting/emote_trigger/gangnam.json
+e84e562cfea03b9791b6e04117b09caaba02df76 data/forced_emoting/forced_emoting/emote_trigger/six_seven.json
 4d0cc59113c28075163f583750b6eb8d95cb5a26 data/forced_emoting/forced_emoting/emote_trigger/wave.json

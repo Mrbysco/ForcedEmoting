@@ -1,0 +1,8 @@
+{
+  "emoteId": "forced_emoting:gangnam",
+  "entityType": "#forced_emoting:armed",
+  "length": 4.0,
+  "triggerWords": [
+    "gangnam style"
+  ]
+}

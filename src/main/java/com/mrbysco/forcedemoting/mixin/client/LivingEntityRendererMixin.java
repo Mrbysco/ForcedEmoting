@@ -38,7 +38,7 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
 	)
 	private void forcedemoting$setupAnim(T entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight, CallbackInfo ci) {
 		if (this.model instanceof HumanoidModel<?> humanoidModel) {
-			AnimationHandler.animateHumanoid(entity, humanoidModel, this.getBob(entity, partialTicks));
+			AnimationHandler.animateEntity(entity, humanoidModel, this.getBob(entity, partialTicks));
 		}
 	}
 }

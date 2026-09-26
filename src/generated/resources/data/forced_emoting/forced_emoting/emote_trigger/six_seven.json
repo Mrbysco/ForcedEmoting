@@ -1,0 +1,11 @@
+{
+  "emoteId": "forced_emoting:six_seven",
+  "entityType": "#forced_emoting:armed",
+  "length": 3.0,
+  "targetPlayers": true,
+  "triggerWords": [
+    "67",
+    "6 7",
+    "six seven"
+  ]
+}
